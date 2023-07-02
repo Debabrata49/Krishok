@@ -10,6 +10,7 @@
 
     <!-- font awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <link href="{{ asset('css/index.css') }}" rel="stylesheet">
 
@@ -34,18 +35,18 @@
 
         <nav class="navbar">
             <a href="#home">home</a>
-            <a href="#product">product</a>
+            <a href="{{'product_list'}}">product</a>
             <a href="#about">about</a>
             <a href="#review">review</a>
             <a href="#contact">contact</a>
         </nav>
 
         <div class="icons">
-            <div id="cart-btn" class="fas fa-shopping-basket"></div>
+            <div id="cart-btn" class=""></div>
             <div id="login-btn" class="fas fa-user"></div>
             <div id="menu-btn" class="fas fa-bars"></div>
         </div>
-
+        <?php ?>
         <!-- shopping cart -->
 
         <div class="shopping-cart">
@@ -93,22 +94,62 @@
 
         <!-- login -->
 
-        <form action="" class="login-form">
-
+       <!--  <form action="{{ url('user/login')}}" method="POST" class="login-form">
+            {{ csrf_field() }}
             <h3>login form</h3>
 
-            <input type="email" placeholder="enter your email" class="box">
-            <input type="password" placeholder="enter your password" class="box">
+            <input type="email" placeholder="enter your email" name="user_email" class="box">
+            <input type="password" placeholder="enter your password" name="user_password" class="box">
 
             <div class="remember">
                 <input type="checkbox" name="" id="remember-me">
                 <label for="remember-me">remember me</label>
             </div>
-            <a href="#" class="btn"> login </a>
+            <button class="btn">Login</button>
+            <p class="pt-3 text-center" style="font-size: 15px;">  
+                <span class="text-muted"> Not a member? </span>  
+                <a href="user/register"> Sign up </a>  
+            </p>  
 
-        </form>
+        </form> -->
 
     </header>
+
+    <!-- login-Modal -->
+    <!-- <div id="modal" class="modal">
+        <div class="modal-content">
+            <button id="btn1">Button 1</button>
+            <button id="btn2">Button 2</button>
+        </div>
+    </div> -->
+    <div class="modal" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <img src="images/buyer_img.png" height="100" width="100">
+                        <div class="clearfix"></div>
+                        <hr>
+                        <button class="btn btn-default" id="btn1" style="padding: 0.6rem 2rem !important;font-size: 1.6rem !important;">Are you want to Buy</button>
+                    </div>
+                    <div class="col">
+                        <img src="images/farmer_img.jpg" height="100" width="100">
+                        <div class="clearfix"></div>
+                        <hr>
+                        <button class="btn btn-default" id="btn2" style="padding: 0.6rem 1rem !important;font-size: 1.6rem !important;">Are you want to Sell</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            <button type="button" class="btn btn-secondary" id="modal_close" data-dismiss="modal" style="padding: 0.6rem 1rem !important;font-size: 1.6rem !important; align-items: left !important;">Close</button>
+        </div>
+    </div>
+    </div>
+    </div>
 
     <!-- end -->
 
@@ -118,7 +159,7 @@
 
         <div class="content">
             <h3> <span> </span></h3>
-            <a href="#" class="btn"> Buy now </a>
+            <a href="{{'product_list'}}" class="btn"> Buy now </a>
         </div>
 
     </section>
@@ -183,9 +224,9 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <i class="fas fa-shopping-cart"></i>
+                    <!-- <i class="fas fa-shopping-cart"></i>
                     <i class="fas fa-heart"></i>
-                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-eye"></i> -->
                 </div>
             </div>
 
@@ -203,9 +244,9 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <i class="fas fa-shopping-cart"></i>
+                    <!-- <i class="fas fa-shopping-cart"></i>
                     <i class="fas fa-heart"></i>
-                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-eye"></i> -->
                 </div>
             </div>
 
@@ -223,9 +264,9 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <i class="fas fa-shopping-cart"></i>
+                   <!--  <i class="fas fa-shopping-cart"></i>
                     <i class="fas fa-heart"></i>
-                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-eye"></i> -->
                 </div>
             </div>
 
@@ -243,9 +284,9 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <i class="fas fa-shopping-cart"></i>
+                   <!--  <i class="fas fa-shopping-cart"></i>
                     <i class="fas fa-heart"></i>
-                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-eye"></i> -->
                 </div>
             </div>
 
@@ -263,9 +304,9 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <i class="fas fa-shopping-cart"></i>
+                    <!-- <i class="fas fa-shopping-cart"></i>
                     <i class="fas fa-heart"></i>
-                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-eye"></i> -->
                 </div>
             </div>
 
@@ -283,9 +324,9 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star-half-alt"></i>
                     </div>
-                    <i class="fas fa-shopping-cart"></i>
+                    <!-- <i class="fas fa-shopping-cart"></i>
                     <i class="fas fa-heart"></i>
-                    <i class="fas fa-eye"></i>
+                    <i class="fas fa-eye"></i> -->
                 </div>
             </div>
 
@@ -540,6 +581,70 @@ At Krishok, we are committed to promoting sustainable agriculture and supporting
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
-    <script src="{{ asset('js/script.css') }}"></script>
+    <script>
+    let cart = document.querySelector('.shopping-cart');
+
+        document.querySelector('#cart-btn').onclick = () =>{
+        cart.classList.toggle('active');
+        login.classList.remove('active');
+        navbar.classList.remove('active');
+        }
+
+        let login = document.querySelector('.login-form');
+
+        document.querySelector('#login-btn').onclick = () =>{
+        // location.href = "http://localhost:8000/userloginView";
+        document.querySelector('#modal').style.display = 'block';
+        // login.classList.toggle('active');
+        // cart.classList.remove('active');
+        // navbar.classList.remove('active');
+        }
+        document.querySelector('#modal_close').onclick = () =>{
+           document.querySelector('#modal').style.display = 'none'; 
+        }
+
+        document.querySelector('#btn1').onclick = function() {
+            location.href = "http://localhost:8000/userloginView";
+        };
+
+        document.querySelector('#btn2').onclick = function() {
+            location.href = "http://localhost:8000/farmer_login";
+        };   
+
+        let navbar = document.querySelector('.navbar');
+
+        document.querySelector('#menu-btn').onclick = () =>{
+        navbar.classList.toggle('active');
+        cart.classList.remove('active');
+        login.classList.remove('active');
+        }
+
+        window.onscroll = () =>{
+        login.classList.remove('active');
+        navbar.classList.remove('active');
+        cart.classList.remove('active');
+        }
+
+        var swiper = new Swiper(".review-slider", {
+        spaceBetween:20,
+        centeredSlides: true,
+        autoplay: {
+            delay: 7500,
+            disableOnInteraction: false,
+        },
+        loop: true,
+        breakpoints: {
+            0:{
+            slidesPerView: 1,
+            },
+            768:{
+            slidesPerView: 2,
+            },
+            991:{
+            slidesPerView: 3,
+            },
+        },
+        });
+    </script>
 </body>
 </html>
