@@ -5,7 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="Website Icon" type="png" href="Krishok-logo.png">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Website icon</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
@@ -225,13 +226,32 @@
                        <td> <img src="{{ asset($key->product_image) }}" height="100" width="100"></td>
                         <td>{{$key->product_name}}</td>
                         <td>{{$key->product_price}}/Box</td>
-                        <td colspan="2"><button class="btn btn-danger btn-lg" id="delete-btn" data-item-id="{{$key->id}}">Delete</button> </td>
+                        <td colspan="2"><button class="btn btn-primary btn-lg" id="edit_btn" data-item-id="{{$key->id}}">Edit</button> | <button class="btn btn-danger btn-lg" id="delete-btn" data-item-id="{{$key->id}}">Delete</button> </td>
                     </tr>
                     @endforeach
                     @endif
                 </tbody>
             </table>
         </div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog" id="edit_modal">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Product</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <p>Modal body text goes here.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
 </body>
 <script>
@@ -249,6 +269,10 @@
                 }
             },    
         });
+    });
+    $(document).on('click','#edit_btn',function(){
+        // alert("hi");
+        $('#edit_modal').show();
     });
     // document.querySelector('form').addEventListener('submit', (e) => {
     //     const formData = new FormData(e.target);

@@ -22,11 +22,11 @@
                 @endif
                 <div class="input-group">
                     <input type="text" id="login-username" name="userid" required>
-                    <label for="login-username">Username</label>
+                    <label for="login-username" style="background-color:white;padding:4px">Username</label>
                 </div>
                 <div class="input-group">
                     <input type="password" id="login-password" name="userpass" required >
-                    <label for="login-password">Password</label>
+                    <label for="login-password" style="background-color:white;padding:4px">Password</label>
                 </div>
                 <button type="submit" style="background-color: #17d400 !important;">Login</button>
                 <p class="form-link" id="register-link">Don't have an account? <a href="farmer_singup">Register here.</a></p>
