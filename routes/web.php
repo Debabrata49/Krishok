@@ -61,5 +61,7 @@ Route::GET('UserLogout',[UserController::class, 'UserLogout']);
 
 Route::get('/product',[UserController::class,'buyNowData']);
 
+Route::POST('/user/product/list',[UserController::class,'productListingApi']);
+
 
 

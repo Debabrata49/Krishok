@@ -764,6 +764,13 @@ p{
   }
 }
 
+#searchBox{
+    width: 160px;
+    border: 1.5px solid;
+    border-radius: 5px;
+    height: 21px;
+}
+
 @media (max-width: 450px) {
   html {
     font-size: 50%;

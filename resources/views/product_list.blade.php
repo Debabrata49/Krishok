@@ -36,26 +36,19 @@
   <div class="container">
     <h2 class="userName">Welcome {{$userDetails->name}}</h2>
     <button class="btn btn-primary userLogout" onclick="location.href='UserLogout';">Logout</button>
-    <h2 align="center">Our Product</h2><hr>
     <div class="row">
-      @if(count($listProduct)>0)
-      @foreach($listProduct as $product)
-      <div class="col-md-3">
-        <table align="center" cellspacing="0" cellpadding="10">
-          <tr align="center">
-            <td>
-              <img class="product_img" src="{{ asset($product->product_image) }}" height="200" width="200"><br>
-              <p>{{$product->product_name}}</p><br>
-              <p>Price &#8377; {{$product->product_price}}/Box</p>
-              <button class="btn btn-primary" id="buy_now" data-user-id="{{$userDetails->id}}" data-item-id="{{$product->id}}">Buy Now</button>
-            </td>
-            <br>
-            <br>
-          </tr>
-        </table>
-      </div>      
-      @endforeach
-      @endif
+      <div class="col"></div>
+      <div class="col">
+        <h2 align="center">Our Product</h2>
+      </div>
+      <div class="col">
+        <label> <h3>Search:</h3> </label>
+        <input type="text" name="searchBox" id="searchBox" placeholder="Search Here..">
+      </div>
+    </div>
+    <hr>
+    <div class="row" id="product_list">
+      
     </div>
   </div>
   <div class="modal" tabindex="-1" role="dialog" id="buy_now_modal">
@@ -66,6 +59,34 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 <script type="text/javascript">
+  productListingapi(1);
+
+  function productListingapi(page_number,search_name){
+    $.ajax({
+      type: "POST",
+      url: '/user/product/list',
+      data: {
+        "_token": "{{ csrf_token() }}",
+        page_number:page_number,
+        search_name:search_name
+      },
+      success: function(response) {
+        console.log(response);
+        if(response.error == false){
+          var appendDataArray =[];
+          $.each(response.data, function (key, value) {
+            appendData = '<div class="col-md-3"><table align="center" cellspacing="0" cellpadding="10"><tr align="center"><td><img class="product_img" src="'+value.product_image+'" height="200" width="200"><br><p>'+value.product_name+'</p><br><p>Price &#8377; '+value.product_price+'/Box</p><button class="btn btn-primary" id="buy_now" data-user-id="'+response.user_data.id+'" data-item-id="'+value.id+'">Buy Now</button></td><br><br></tr></table></div>'; 
+            appendDataArray.push(appendData);          
+          });
+          $('#product_list').html('');
+          $('#product_list').append(appendDataArray.join(''));      
+        }else if(response.error == true){
+          $('#product_list').html('');
+          $('#product_list').html('<h4 align="center" style="color:red">No Data Found!</h4>')
+        }
+      }
+    });
+  }
   $(document).on('click','#buy_now',function(){
     var itemId = $(this).data('item-id');
     var user_id = $(this).data('user-id');
@@ -131,6 +152,11 @@
             }
         },    
     });
+  });
+
+  $(document).on('keyup','#searchBox',function(){
+    var searchName = $(this).val();
+    productListingapi(1,searchName);
   });
 
   $(document).on('click','#buy_modalClose',function(){

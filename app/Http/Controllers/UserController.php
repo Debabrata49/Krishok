@@ -76,9 +76,43 @@ class UserController extends Controller
 	public function product_list(){
 		if(session::has('userData')){
 			$userDetails = DB::table('customers_details')->where('id', session::get('userData'))->select('*')->first();
-			$listProduct = DB::table('product_list')->select('*')->orderByDesc('created_at')->get();
+			// $listProduct = DB::table('product_list')->select('*')->orderByDesc('created_at')->get();
+			$listProduct = [];
 			return view('product_list',compact('userDetails','listProduct'));
 		}	
+	}
+
+	public function productListingApi(request $request){
+		if(session::has('userData')){
+			$userDetails = DB::table('customers_details')->where('id', session::get('userData'))->select('id')->first();
+			$listProduct=[];
+			$searchName = $request->search_name;
+			if(!empty($searchName)){
+				$listProduct = DB::table('product_list')->select('*')
+					->orWhere(function ($query) use($searchName) {
+					$query
+                      ->where('product_price', 'like', "%$searchName%")
+                      ->orwhere('product_name', 'like', "%$searchName%");
+            		})
+            		->orderByDesc('created_at')->get();	
+            }else{
+            	$listProduct = DB::table('product_list')->select('*')->orderByDesc('created_at')->get();
+            }
+			
+			if( count($listProduct)>0){
+				return response()->json([
+					'error' => false,
+					'data' => $listProduct,
+					'user_data' => $userDetails
+				]);
+			}else{
+				return response()->json([
+					'error' => true,
+					'data' => ''
+				]);
+			}
+			
+		}
 	}
 
 	public function buyNowData(request $request)
