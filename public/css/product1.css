@@ -771,6 +771,13 @@ p{
     height: 21px;
 }
 
+.cart_icon{
+    position: absolute;
+    left: 90%;
+    display: flex;
+    margin-top: -25px;
+}
+
 @media (max-width: 450px) {
   html {
     font-size: 50%;

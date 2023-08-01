@@ -45,6 +45,9 @@
         <label> <h3>Search:</h3> </label>
         <input type="text" name="searchBox" id="searchBox" placeholder="Search Here..">
       </div>
+      <div class="cart">
+        <button class="cart_icon" id="cart_icon"> <a href="/product/cart">Cart</a> </button>
+      </div>
     </div>
     <hr>
     <div class="row" id="product_list">
@@ -52,10 +55,24 @@
     </div>
   </div>
   <div class="modal" tabindex="-1" role="dialog" id="buy_now_modal">
-  <div class="modal-dialog" role="document">
-      <div id="oderConfirm"></div>
+    <div class="modal-dialog" role="document">
+        <div id="oderConfirm"></div>
+    </div>
   </div>
-</div>
+  <!-- <div class="modal" tabindex="-1" role="dialog" id="cart_modal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+        </div>
+        <div class="modal-body" id="cart_body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+        </div>
+      </div>
+    </div>
+  </div> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 <script type="text/javascript">
@@ -75,7 +92,7 @@
         if(response.error == false){
           var appendDataArray =[];
           $.each(response.data, function (key, value) {
-            appendData = '<div class="col-md-3"><table align="center" cellspacing="0" cellpadding="10"><tr align="center"><td><img class="product_img" src="'+value.product_image+'" height="200" width="200"><br><p>'+value.product_name+'</p><br><p>Price &#8377; '+value.product_price+'/Box</p><button class="btn btn-primary" id="buy_now" data-user-id="'+response.user_data.id+'" data-item-id="'+value.id+'">Buy Now</button></td><br><br></tr></table></div>'; 
+            appendData = '<div class="col-md-3"><table align="center" cellspacing="0" cellpadding="10"><tr align="center"><td><img class="product_img" src="'+value.product_image+'" height="200" width="200"><br><p>'+value.product_name+'</p><br><p>Price &#8377; '+value.product_price+'/Box</p><a href="{{url("product/add/cart")}}/'+response.user_data.id+'" class="btn btn-primary" id="buy_now" data-user-id="'+response.user_data.id+'" data-item-id="'+value.id+'">Buy Now</a></td><br><br></tr></table></div>'; 
             appendDataArray.push(appendData);          
           });
           $('#product_list').html('');
@@ -87,72 +104,73 @@
       }
     });
   }
-  $(document).on('click','#buy_now',function(){
-    var itemId = $(this).data('item-id');
-    var user_id = $(this).data('user-id');
-      $.ajax({
-        type: "GET",
-        url: '/product',
-        data: {
-                "_token": "{{ csrf_token() }}",
-                user_id:user_id,
-                itemId:itemId
-            },
-        success: function(response) {
-            if(response.status == 200){
-              console.log(response);
-              var currentDate = new Date();
-              var date = currentDate.toLocaleDateString();
-              var time = currentDate.toLocaleTimeString();
-              // Create the modal content
-              var newModal = '';
 
-              // Create the modal header
-              newModal += '<div class="modal-header">';
-              newModal += '<h2 class="modal-title">Your Order Confirmed!</h2>';
-              newModal += '</div>';
+  // $(document).on('click','#buy_now',function(){
+  //   var itemId = $(this).data('item-id');
+  //   var user_id = $(this).data('user-id');
+  //     $.ajax({
+  //       type: "GET",
+  //       url: '/product',
+  //       data: {
+  //               "_token": "{{ csrf_token() }}",
+  //               user_id:user_id,
+  //               itemId:itemId
+  //           },
+  //       success: function(response) {
+  //           if(response.status == 200){
+  //             console.log(response);
+  //             var currentDate = new Date();
+  //             var date = currentDate.toLocaleDateString();
+  //             var time = currentDate.toLocaleTimeString();
+  //             // Create the modal content
+  //             var newModal = '';
 
-              // Create the modal body
-              newModal += '<div class="modal-body">';
-              newModal += '<div class="d-flex justify-content-between align-items-center">';
-              newModal += '<div>';
-              newModal += '<p class="text-muted mb-2">Order ID <span class="fw-bold text-body">'+response.orderHistory.order_id+'</span></p>';
-              newModal += '<p class="text-muted mb-0">Place On <span class="fw-bold text-body">'+date+'</span></p>';
-              newModal += '</div>';
-              newModal += '</div>';
-              newModal += '<hr>';
-              newModal += '<div class="flex-fill">';
-              newModal += '<h3 class="bold">'+response.ProductData.product_name+'</h3>';
-              newModal += '<p class="text-muted">Qt: 1 Box</p>';
-              newModal += '<h3 class="mb-3">Rs. '+response.ProductData.product_price+'<span class="text-muted"> via (COD)</span></h3>';
-              newModal += '</div>';
-              newModal += '<div>';
-              // newModal += '<img class="align-self-center img-fluid" src="{{ asset('+response.ProductData.product_image+') }}" width="250">';
-              newModal += '<img class="align-self-center img-fluid" src="' + response.ProductData.product_image + '" width="250" hight="250">';
+  //             // Create the modal header
+  //             newModal += '<div class="modal-header">';
+  //             newModal += '<h2 class="modal-title">Your Order Confirmed!</h2>';
+  //             newModal += '</div>';
+
+  //             // Create the modal body
+  //             newModal += '<div class="modal-body">';
+  //             newModal += '<div class="d-flex justify-content-between align-items-center">';
+  //             newModal += '<div>';
+  //             newModal += '<p class="text-muted mb-2">Order ID <span class="fw-bold text-body">'+response.orderHistory.order_id+'</span></p>';
+  //             newModal += '<p class="text-muted mb-0">Place On <span class="fw-bold text-body">'+date+'</span></p>';
+  //             newModal += '</div>';
+  //             newModal += '</div>';
+  //             newModal += '<hr>';
+  //             newModal += '<div class="flex-fill">';
+  //             newModal += '<h3 class="bold">'+response.ProductData.product_name+'</h3>';
+  //             newModal += '<p class="text-muted">Qt: 1 Box</p>';
+  //             newModal += '<h3 class="mb-3">Rs. '+response.ProductData.product_price+'<span class="text-muted"> via (COD)</span></h3>';
+  //             newModal += '</div>';
+  //             newModal += '<div>';
+  //             // newModal += '<img class="align-self-center img-fluid" src="{{ asset('+response.ProductData.product_image+') }}" width="250">';
+  //             newModal += '<img class="align-self-center img-fluid" src="' + response.ProductData.product_image + '" width="250" hight="250">';
 
 
 
-              newModal += '</div>';
-              newModal += '<div>';
-              newModal += '<h2>Address:</h2>';
-              newModal += '<h3>'+response.UserData.name+'</h3>';
-              newModal += '<h3>'+response.UserData.mobile_number+'</h3>';
-              newModal += '<h3>'+response.UserData.address+'</h3>';
-              newModal += '</div>';
+  //             newModal += '</div>';
+  //             newModal += '<div>';
+  //             newModal += '<h2>Address:</h2>';
+  //             newModal += '<h3>'+response.UserData.name+'</h3>';
+  //             newModal += '<h3>'+response.UserData.mobile_number+'</h3>';
+  //             newModal += '<h3>'+response.UserData.address+'</h3>';
+  //             newModal += '</div>';
 
-              // Create the modal footer
-              newModal += '<div class="modal-footer">';
-              newModal += '<button type="button" class="btn btn-secondary" id="buy_modalClose" data-dismiss="modal">Close</button>';
-              newModal += '</div>';
+  //             // Create the modal footer
+  //             newModal += '<div class="modal-footer">';
+  //             newModal += '<button type="button" class="btn btn-secondary" id="buy_modalClose" data-dismiss="modal">Close</button>';
+  //             newModal += '</div>';
 
-              // Append the modal HTML to the #orderConfirm div
-              $('#oderConfirm').append('<div class="modal-content">' + newModal + '</div>');
+  //             // Append the modal HTML to the #orderConfirm div
+  //             $('#oderConfirm').append('<div class="modal-content">' + newModal + '</div>');
 
-              $('#buy_now_modal').show();
-            }
-        },    
-    });
-  });
+  //             $('#buy_now_modal').show();
+  //           }
+  //       },    
+  //   });
+  // });
 
   $(document).on('keyup','#searchBox',function(){
     var searchName = $(this).val();
@@ -164,6 +182,10 @@
       $('#buy_now_modal').hide();
       location.reload();
   });
+
+  // $(document).on('click','#cart_icon',function(){  
+
+  // });
 </script>
 </body>
 </html>

@@ -145,4 +145,12 @@ class UserController extends Controller
 		$orderHistory = DB::table('order_history')->select('*')->orderByDesc('created_at')->get();
 		return view('admin_dashboard',compact('orderHistory'));
 	}	
+
+	public function viewCart(){
+		return view('productCart');
+	}
+
+	public function addProductToCart($pId){
+		
+	}
 }

@@ -63,5 +63,10 @@ Route::get('/product',[UserController::class,'buyNowData']);
 
 Route::POST('/user/product/list',[UserController::class,'productListingApi']);
 
+//add to cart
+Route::GET('/product/cart',[UserController::class,'viewCart']);
+Route::get('product/add/cart/{productId}',[UserController::class,'addProductToCart']);
+
+
 
 
